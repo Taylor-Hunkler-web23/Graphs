@@ -126,7 +126,36 @@ class Graph:
                 # Enqueue A PATH TO all it's neighbors
                     # MAKE A COPY OF THE PATH
                     # ENQUEUE THE COPY
-                    
+        # Create a queue
+        queue = Queue()
+      # Enqueue A PATH TO the starting vertex
+        queue.enqueue([starting_vertex])
+        # Create a set to store visited vertices
+        visited = set()
+        # While the queue is not empty...
+        while queue.size() > 0:
+            # Dequeue the first PATH
+            path = queue.dequeue()
+            # GRAB THE VERTEX FROM THE END OF THE PATH
+            v = path[-1]
+            # Check if it's been visited
+            # If it hasn't been visited...
+            if v not in visited:
+             # CHECK IF IT'S THE TARGET
+                if v == destination_vertex:
+             # IF SO, RETURN THE PATH
+
+                    return path
+
+                visited.add(v)
+                # Push all it's neighbors onto the stack
+                for neighbor in self.get_neighbors(v):
+                    # MAKE A COPY OF THE PATH
+                    # ENQUEUE THE COPY
+
+                    new_path = list(path)
+                    new_path.append(neighbor)
+                    queue.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -236,7 +265,7 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    
+    print("BFS")
     print(graph.bfs(1, 6))
 
     '''
