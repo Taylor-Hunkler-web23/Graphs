@@ -64,7 +64,7 @@ class Graph:
                 # Mark it as visited
                 print(v)
                 visited.add(v)
-                # Enqueue all it's neighbors to back of queue
+                # Enqueue all it's neighbors
                 for neighbor in self.get_neighbors(v):
                     q.enqueue(neighbor)
 
@@ -129,8 +129,7 @@ class Graph:
         
         # Create a queue
         queue = Queue()
-
-      # Enqueue a list to use as A PATH TO the starting vertex      
+      # Enqueue A PATH TO the starting vertex
         queue.enqueue([starting_vertex])
         # Create a set to store visited vertices
         visited = set()
@@ -138,22 +137,21 @@ class Graph:
         while queue.size() > 0:
             # Dequeue the first PATH
             path = queue.dequeue()
-            # GRAB THE VERTEX FROM THE END OF THE PATH. last item in path
+            # GRAB THE VERTEX FROM THE END OF THE PATH
             v = path[-1]
-
-            # If vertex hasn't been visited...
+            # Check if it's been visited
+            # If it hasn't been visited...
             if v not in visited:
              # CHECK IF IT'S THE TARGET
                 if v == destination_vertex:
              # IF SO, RETURN THE PATH
                     return path
-        #add vertex to visited
+        #add to visited
                 visited.add(v)
                 # Enqueue A PATH TO all it's neighbors
                 for neighbor in self.get_neighbors(v):
-                    # MAKE A COPY OF THE PATH        
+                    # MAKE A COPY OF THE PATH            
                     new_path = list(path)
-                    #add
                     new_path.append(neighbor)  
                     # ENQUEUE THE COPY
                     queue.enqueue(new_path)
