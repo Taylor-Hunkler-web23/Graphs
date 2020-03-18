@@ -33,20 +33,21 @@ def earliest_ancestor(ancestors, starting_node):
     # '''
    #BFS [6] copy[6,3] now queue [6,3] now longer path for [6] -[6,3,1] -[6,3,1,10]
     queue = Queue()
-        #enqueue with starting node
+        #enqueue a path with starting node
     queue.enqueue([starting_node])
        #longest path
     longest_path_length = 1
-    #-1 If the input individual has no parents, the function should return -1.
+    # If the input individual has no parents, the function should return -1.
     earliest_ancestor= -1 #6 #3
     
     while queue.size() >0:
         path=queue.dequeue()#6  -[6,3] -[6,3,1] -[6,3,1,10]
-            #last things in path
+             #last things in path
         ver=path[-1]#6 -3- -1- -10-
 
-# If there is more than one ancestor tied for "earliest", return the one with the lowest numeric ID. 
+# If there is more than one ancestor tied for "earliest", return the one with the lowest numeric ID. #looking for path longer than current
         if (len(path) >= longest_path_length and ver < earliest_ancestor) or (len(path)>longest_path_length):
+            #earliest ancestor now vertex
             earliest_ancestor=ver#6 #3 -1- -10-
              #update with length of path
             longest_path_length = len(path)
@@ -61,6 +62,7 @@ def earliest_ancestor(ancestors, starting_node):
             queue.enqueue(path_copy)#[6,3] [6,3,1] [6,3,1,10]
 
 #furthest path
+        print(longest_path_length, 'Lpath')
         print(path, 'path')
         print(earliest_ancestor, 'Earliest a')
 
@@ -68,7 +70,5 @@ def earliest_ancestor(ancestors, starting_node):
 
 
 
-
-# If the input individual has no parents, the function should return -1.
 
     
