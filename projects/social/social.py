@@ -81,13 +81,37 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
+     #BFS shortest path
+
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
         queue= Queue()
         #a list for path
-        queue.enqueue([userID]) 
+        queue.enqueue([user_id]) 
 
-        while queue.size()>0:
+        #while something in queue
+        while queue.size() > 0:
+            # Dequeue the first PATH
+            path = queue.dequeue()
+            # GRAB THE last user FROM THE END OF THE PATH. last item in path
+            friend = path[-1]
+
+            # If user id key hasn't been visited...
+            if friend not in visited:      
+         #The key is the friend's ID and the value is the path.  
+        #add user id to visited dict key
+        #store current path in dict as value
+                visited[friend] = path
+                # Enqueue A PATH TO all it's neighbors
+                #friendships of current user
+                #friendship adjanceny list directly
+                for neighbor in self.friendships[friend]:
+                    # MAKE A COPY OF THE PATH        
+                    new_path = list(path)
+                    #add 
+                    new_path.append(neighbor)  
+                    # ENQUEUE THE COPY
+                    queue.enqueue(new_path)
 
             
         return visited
@@ -97,5 +121,5 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
     print(sg.friendships)
-    # connections = sg.get_all_social_paths(1)
-    # print(connections)
+    connections = sg.get_all_social_paths(1)
+    print(connections)
