@@ -27,73 +27,89 @@ world.print_rooms()
 player = Player(world.starting_room)
 
 
-# Start by writing an algorithm that picks a random unexplored direction from the player's current room, travels and logs that direction, then loops. This should cause your player to walk a depth-first traversal. When you reach a dead-end (i.e. a room with no unexplored paths), walk back to the nearest room that does contain an unexplored path.
 
-#go to room
-# if went north, thenn that room has exit to the south
+#start in current room
+#add room to visited. key is room id, value is exits
+#go in the direction of the last exit in visted
+#keep repeating until no more exits unvisted in room
+#if no more exits unvisted, go back in the direction you came from
+#repeat steps until theres no more rooms left unvisted
 
 
-# Fill this out with directions to walk
-# traversal_path = ['n', 'n']
+#keep track of every move made
 traversal_path = []
 
-#rooms visited
+#rooms visited id-room value-exits
 visited = {}
 
-#still rooms to visit
-while len(visited)< len (room_graph):
-    #initiate starting point
+#keep track of the opposite direction of move we make
+trailback = []
+
+#opposite directions n=s
+opposite_direction = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+
+#while still rooms not visited
+while len(visited)< len(room_graph):
+    # print(room_graph, 'RgG')
+
+    # print(visited, 'visited begin')
+    # print(trailback, 'trailback begin')
+    # print(traversal_path,'traversal begin')
+
+    #initiate starting room
     if len(visited) == 0:
-        #current room
-        room = player.current_room.id
-        #exit directions 
-        exits = player.current_room.get_exits()
-
-# add room id as id, exits as value
-        visited[room] = exits
         
-#if room is not in visited
-    if player.current_room.id not in visited:
-        #add room to visited
+    #add room to visited room.id as key, exits as values- {0: ['n']} 
         visited[player.current_room.id] = player.current_room.get_exits()
-
-
-
-##############################################
-
-# def bfs(starting_room):
-     
         
-#         # Create a queue
-#     queue = Queue()
+      
 
-#       # Enqueue a list to use as A PATH TO the starting vertex      
-#     queue.enqueue([starting_room])
-#         # Create a set to store visited vertices
-#     visited = set()
-#         # While the queue is not empty...
-#     while queue.size() > 0:
-#             # Dequeue the first PATH
-#         path = queue.dequeue()
-#             # GRAB THE VERTEX FROM THE END OF THE PATH. last item in path
-#         room = path[-1]
 
-#             # If vertex hasn't been visited...
-#         if room not in visited:
-#              # CHECK IF IT'S THE TARGET
-#             if room == '?':
-#              # IF SO, RETURN THE PATH
-#                 return path
-#         #add vertex to visited
-#             visited.add(room)
-#                 # Enqueue A PATH TO all it's neighbors
-#             for neighbor in self.get_neighbors(v):
-#                     # MAKE A COPY OF THE PATH        
-#                 new_path = list(path)
-#                     #add
-#                 new_path.append(neighbor)  
-#                     # ENQUEUE THE COPY
-#                 queue.enqueue(new_path)
+        
+    #if room is not in visited
+    if player.current_room.id not in visited:
+    #add room to visited {0: [], 1: ['n', 's']} \
+        visited[player.current_room.id] = player.current_room.get_exits()
+        # print(visited.keys(),"key")
+      
+      
+
+        
+
+    #if we explored all exits of current room
+    while len(visited[player.current_room.id]) <1: 
+       
+        # then we need to exit to the room we just came from
+        # get the opposite of the last direction we just traveled in
+        go_back= trailback.pop() #n
+        # print(go_back,"go back")
+
+       #log the direction of the move we are about to make in traversal_path
+        traversal_path.append(go_back)
+        #go to the room in that direction
+        player.travel(go_back)
+
+    
+
+
+    #go_to = the last exit in visited
+    go_to = visited[player.current_room.id].pop()
+
+
+    #log the direction we are going 
+    traversal_path.append(go_to) #n s n
+
+    #log the opposite direction we are going in
+    trailback.append(opposite_direction[go_to])#n = s n s 
+
+    #go to the room in that direction
+    player.travel(go_to)#n s n
+
+
+    # print(visited, 'visited end')
+    # print(trailback, 'trailback end')
+    # print(traversal_path,'traversal end')
+
 
 
 
@@ -101,6 +117,8 @@ while len(visited)< len (room_graph):
 visited_rooms = set()
 player.current_room = world.starting_room
 visited_rooms.add(player.current_room)
+
+
 
 for move in traversal_path:
     player.travel(move)
@@ -117,12 +135,12 @@ else:
 #######
 # UNCOMMENT TO WALK AROUND
 #######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+# player.current_room.print_room_description(player)
+# while True:
+#     cmds = input("-> ").lower().split(" ")
+#     if cmds[0] in ["n", "s", "e", "w"]:
+#         player.travel(cmds[0], True)
+#     elif cmds[0] == "q":
+#         break
+#     else:
+#         print("I did not understand that command.")

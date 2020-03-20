@@ -100,11 +100,10 @@ class SocialGraph:
             if friend not in visited:      
          #The key is the friend's ID and the value is the path.  
         #add user id to visited dict key
-        #store current path in dict as value
+        #store current path in dict as value {3:[1,2,3]}
                 visited[friend] = path
                 # Enqueue A PATH TO all it's neighbors
                 #friendships of current user
-                #friendship adjanceny list directly
                 for neighbor in self.friendships[friend]:
                     # MAKE A COPY OF THE PATH        
                     new_path = list(path)
