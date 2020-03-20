@@ -30,10 +30,10 @@ player = Player(world.starting_room)
 
 #start in current room
 #add room to visited. key is room id, value is exits
-#go in the direction of the last exit in visted
+#go in the direction of the last exit in visited
 #keep repeating until no more exits unvisted in room
-#if no more exits unvisted, go back in the direction you came from
-#repeat steps until theres no more rooms left unvisted
+#if no more exits unvisited, go back in the direction you came from
+#repeat steps until theres no more rooms left unvisited
 
 
 #keep track of every move made
@@ -49,38 +49,26 @@ trailback = []
 opposite_direction = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
 
 #while still rooms not visited
-while len(visited)< len(room_graph):
-    # print(room_graph, 'RgG')
-
-    # print(visited, 'visited begin')
-    # print(trailback, 'trailback begin')
-    # print(traversal_path,'traversal begin')
+while len(visited)< len(room_graph):   
 
     #initiate starting room
     if len(visited) == 0:
         
     #add room to visited room.id as key, exits as values- {0: ['n']} 
-        visited[player.current_room.id] = player.current_room.get_exits()
-        
+        visited[player.current_room.id] = player.current_room.get_exits()     
       
-
-
         
     #if room is not in visited
     if player.current_room.id not in visited:
     #add room to visited {0: [], 1: ['n', 's']} \
         visited[player.current_room.id] = player.current_room.get_exits()
-        # print(visited.keys(),"key")
+        # print(visited.keys(),"key")    
       
-      
-
         
-
     #if we explored all exits of current room
     while len(visited[player.current_room.id]) <1: 
        
-        # then we need to exit to the room we just came from
-        # get the opposite of the last direction we just traveled in
+        # then we need to go back to the room we just came from
         go_back= trailback.pop() #n
         # print(go_back,"go back")
 
